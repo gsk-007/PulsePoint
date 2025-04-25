@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon backend/index.js",
+    "db:seed": "node backend/seeds/feedback.js",
     "start": "node backend/index.js"
   },
   "keywords": [],
