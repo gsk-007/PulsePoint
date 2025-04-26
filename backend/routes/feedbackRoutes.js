@@ -6,6 +6,6 @@ import {
 
 const router = express.Router();
 
-router.route("/feedback").get(getFeedbacks).post(createFeedback);
+router.route("/").get(getFeedbacks).post(createFeedback);
 
 export { router as feedbackRoutes };

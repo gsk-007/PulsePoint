@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: "http://localhost:5173",
+    credentials: true,
   }),
 );
 
@@ -19,7 +20,7 @@ app.get("/health-check", (req, res) => {
   res.send("API is running");
 });
 
-app.use(feedbackRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
