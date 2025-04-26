@@ -30,10 +30,18 @@ const createFeedback = async (req, res) => {
 const getFeedbacks = async (req, res) => {
   const pageSize = Number(req.query.pageSize) || 10;
   const page = Number(req.query.page) || 1;
+  const { name, email, feedbackText, category } = req.query;
 
-  const count = await Feedback.countDocuments();
+  const filters = {};
+  if (name) filters.name = { $regex: name, $options: "i" };
+  if (email) filters.email = { $regex: email, $options: "i" };
+  if (feedbackText)
+    filters.feedbackText = { $regex: feedbackText, $options: "i" };
+  if (category) filters.category = category;
 
-  const feedbacks = await Feedback.find({})
+  const count = await Feedback.countDocuments(filters);
+
+  const feedbacks = await Feedback.find(filters)
     .sort({ createdAt: -1 })
     .skip(pageSize)
     .limit(pageSize)
