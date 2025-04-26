@@ -1,7 +1,16 @@
+import { Routes, Route } from "react-router";
+import FeedbackForm from "./pages/FeedbackForm";
+import Dashboard from "./pages/Dashboard";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <>
-      <h1>Hello</h1>
+      <Toaster />
+      <Routes>
+        <Route path="/submit" element={<FeedbackForm />} />
+        <Route path="/" element={<Dashboard />} />
+      </Routes>
     </>
   );
 }
