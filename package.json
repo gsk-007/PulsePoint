@@ -4,8 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon backend/index.js",
+    "client": "npm run dev --prefix frontend",
     "db:seed": "node backend/seeds/feedback.js",
+    "server": "nodemon backend/index.js",
     "start": "node backend/index.js"
   },
   "keywords": [],
