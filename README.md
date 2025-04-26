@@ -82,6 +82,11 @@ MONGO_URI=your_mongodb_connection_string
 ```bash
 npm run server
 ```
+- Seed Database:
+
+```bash
+npm run db:seed
+```
 
 ### 3. Frontend Setup
 
