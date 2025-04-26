@@ -2,6 +2,16 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { axiosInstance } from "../lib/axios";
 import FilterBar from "../components/FilterBar";
+import { CSVLink } from "react-csv";
+import toast from "react-hot-toast";
+
+const headers = [
+  { label: "Name", key: "name" },
+  { label: "Email", key: "email" },
+  { label: "Message", key: "feedbackText" },
+  { label: "Category", key: "category" },
+  { label: "timestamp", key: "createdAt" },
+];
 
 const Dashboard = () => {
   const [page, setPage] = useState(1);
@@ -22,7 +32,9 @@ const Dashboard = () => {
       setFeedbackData(data.data.feedbacks);
       setPage(data.data.page);
       setTotalPages(data.data.pages);
-    } catch (error) {}
+    } catch (error) {
+      toast.error(error.response.data.message || "Error Loading Data");
+    }
   };
 
   useEffect(() => {
@@ -42,21 +54,34 @@ const Dashboard = () => {
       </div>
       <div className="p-6">
         <div className="mb-4 flex items-center gap-3">
-          <label className="text-gray-700">Page Size:</label>
-          <select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-              setPage(1);
-            }}
-            className="border border-gray-300 rounded px-3 py-1"
-          >
-            {[2, 5, 10, 20, 30].map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
+          <div>
+            <label className="text-gray-700">Page Size:</label>
+            <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setPage(1);
+              }}
+              className="border border-gray-300 rounded px-3 py-1"
+            >
+              {[5, 10, 20, 50, 100].map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+              <CSVLink
+                headers={headers}
+                data={feedbackData}
+                filename={"feedback.csv"}
+              >
+                Download Me
+              </CSVLink>
+            </button>
+          </div>
         </div>
 
         {/* Feedback Table */}
